@@ -11,6 +11,12 @@ public interface InventoryServiceInterface {
 
     void editInventory(String name, double price, double weight);
 
+    void totalValueOfInventory();
+
+    void totalWeightOfInventory();
+
+    void totalPriceOfInventory();
+
     void display();
 
 }
