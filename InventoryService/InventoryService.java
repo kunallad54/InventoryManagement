@@ -6,6 +6,7 @@ import InventoryModel.Inventory;
 public class InventoryService implements InventoryServiceInterface {
 
     InventoryDAO inventoryDAO = new InventoryDAO();
+
     @Override
     public void addInventory(Inventory inventory) {
         inventoryDAO.addInventory(inventory);
@@ -22,8 +23,22 @@ public class InventoryService implements InventoryServiceInterface {
     }
 
     @Override
-    public void display(){
+    public void totalValueOfInventory() {
+        inventoryDAO.totalValueOfInventory();
+    }
 
+    @Override
+    public void totalWeightOfInventory() {
+        inventoryDAO.totalWeightOfInventory();
+    }
+
+    @Override
+    public void totalPriceOfInventory() {
+        inventoryDAO.totalPriceOfInventory();
+    }
+
+    @Override
+    public void display() {
         inventoryDAO.display();
     }
 
