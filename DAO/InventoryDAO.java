@@ -2,53 +2,52 @@ package DAO;
 
 import InventoryModel.Inventory;
 import InventoryService.InventoryServiceInterface;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
 
-import java.util.ArrayList;
-import java.util.List;
 
 public class InventoryDAO implements InventoryServiceInterface {
 
-    ArrayList<Inventory> productList = new ArrayList<>();
+    JSONArray jsonArray = new JSONArray();
 
     @Override
     public void addInventory(Inventory inventory) {
-        productList.add(inventory);
+
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("Name",inventory.getName());
+        jsonObject.put("Price",inventory.getPrice());
+        jsonObject.put("Weight",inventory.getWeight());
+        jsonArray.add(jsonObject);
     }
 
     @Override
     public void deleteInventory(String name) {
-        for (int i = 0; i < productList.size(); i++) {
-            if(productList.get(i).getName().equals(name)){
-                productList.remove(i);
+        JSONObject obj;
+        for (int i = 0; i < jsonArray.size(); i++) {
+            obj = (JSONObject) jsonArray.get(i);
+            String existingName = (String) obj.get("Name");
+            if(existingName.equalsIgnoreCase(name)){
+                jsonArray.remove(obj);
             }
         }
     }
 
     @Override
     public void editInventory(String name, double price, double weight) {
-        for (int i = 0; i < productList.size(); i++) {
-            if(productList.get(i).getName().equals(name)){
-                productList.get(i).setPrice(price);
-                productList.get(i).setWeight(weight);
-            }
+        JSONObject obj;
+        for (int i = 0; i < jsonArray.size(); i++) {
+           obj = (JSONObject) jsonArray.get(i);
+           String existingName = (String) obj.get("Name");
+           if(existingName.equalsIgnoreCase(name)){
+               obj.replace("Price",price);
+               obj.replace("Weight",weight);
+           }
         }
     }
 
     @Override
-    public boolean findByName(String name) {
-        for (int i = 0; i < productList.size(); i++) {
-            if(productList.get(i).getName().equals(name)){
-                return true;
-            }
-        }
-
-        return false;
-
-    }
-
-    @Override
-    public List<Inventory> findAll(){
-        return productList;
+    public void display(){
+        System.out.println(jsonArray);
     }
 
 }
